@@ -12,11 +12,11 @@
 </head>
 <body>
     <label for='token'>Notion token</label>
-    <input id='token' placeholder="8f9f9...">
+    <input id='token' placeholder="8f9f923fd723df...">
     <label for='url'>URL of the Calendar View</label>
     <input id='url' placeholder="https://notion.so/...">
     <label for='format'>Title format</label>
-    <input id='format' value='{NAME}'>
+    <input id='format' value='[{Tags[0]}] {Name}'>
     <label for='result'>Resulting URL</label>
     <input id='result' placeholder='loading...' readonly onclick="this.select(); document.execCommand('copy')">
 
