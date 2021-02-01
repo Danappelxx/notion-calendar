@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>Export Notion Calendar to ICS (and import anywhere else)</title>
+    <style>
+        input {
+            display: block;
+            width: calc(100% - 20px);
+            margin: 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <label for='token'>Notion token</label>
+    <input id='token' placeholder="8f9f9...">
+    <label for='url'>URL of the Calendar View</label>
+    <input id='url' placeholder="https://notion.so/...">
+    <label for='format'>Title format</label>
+    <input id='format' value='{NAME}'>
+    <label for='result'>Resulting URL</label>
+    <input id='result' placeholder='loading...' readonly onclick="this.select(); document.execCommand('copy')">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            let token_el = document.getElementById('token');
+            let url_el = document.getElementById('url');
+            let format_el = document.getElementById('format');
+            let res_el = document.getElementById('result');
+        
+            function recalc_url() {
+                let token = window.btoa(token_el.value);
+                let url = window.btoa(url_el.value);
+                let format = window.btoa(format_el.value);
+                res = new URL('/ics', window.location.href);
+                res.searchParams.append('token', token);
+                res.searchParams.append('url', url);
+                res.searchParams.append('format', format);
+                res_el.value = res.href;
+            }
+
+            token_el.addEventListener("input", recalc_url);
+            url_el.addEventListener("input", recalc_url);
+            format_el.addEventListener("input", recalc_url);
+
+            recalc_url();
+        });
+    </script>
+</body>
+</html>
