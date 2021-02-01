@@ -1,8 +1,4 @@
-
 import traceback
-import json
-import sys
-import os
 import base64
 from datetime import datetime, timedelta
 
@@ -47,7 +43,7 @@ def make_ics():
             event.add('summary', repr(e))
             cal.add_component(event)
         text = cal.to_ical()
-    
+
     res = make_response(text)
     res.headers.set('Content-Disposition', 'attachment;filename=calendar.ics')
     res.headers.set('Content-Type', 'text/calendar;charset=utf-8')
@@ -55,5 +51,5 @@ def make_ics():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080)
 

@@ -1,4 +1,3 @@
-
 import json
 from datetime import datetime
 
@@ -51,7 +50,7 @@ def get_ical(client, calendar_url, title_format):
         properties_by_id[prop['id']] = prop
         if prop['type'] == 'title':
             title_prop = prop
-            
+
     assert title_prop is not None, "Couldn't find a title property"
 
     dateprop = properties_by_id[calendar_query.calendar_by]
@@ -60,15 +59,15 @@ def get_ical(client, calendar_url, title_format):
     cal = Calendar()
     cal.add("summary", "Imported from Notion, via notion-export-ics.")
     cal.add('version', '2.0')
-    
+
     for e in calendar_entries:
         date = e.get_property(dateprop['id'])
         if date is None:
             continue
-        
+
         name = e.get_property(title_prop['id'])
         clean_props = {'NAME': name}
-        
+
         # Put in ICS file
         event = Event()
         desc = ''
@@ -90,11 +89,6 @@ def get_ical(client, calendar_url, title_format):
         event.add('summary', title)
         event.add('description', desc)
         cal.add_component(event)
-        
-        # Print
-        #print("{}: {} -> {}".format(title, date.start, date.end))
-        #print(desc)
-        #print('--------------')
-    
+
     return cal
 
