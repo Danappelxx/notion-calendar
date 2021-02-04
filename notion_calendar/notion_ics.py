@@ -8,8 +8,7 @@ from notion.block import BasicBlock
 from notion.user import User
 
 
-# Hack some representation stuff into notion-py
-
+## Various monky patching for notion-py
 BasicBlock.__repr__ = BasicBlock.__str__ = lambda self: self.title
 User.__repr__ = User.__str__ = lambda self: self.given_name or self.family_name
 
@@ -18,6 +17,17 @@ def calendar_build_query_fixed(self):
         "query2"
     ]["calendar_by"]
     return CollectionView.build_query(self, calendar_by=calendar_by)
+
+import notion
+def store_recordmap(self, recordmap):
+    for table, records in recordmap.items():
+        if records is None: continue
+        for id, record in records.items():
+            self._update_record(
+                table, id, value=record.get("value"), role=record.get("role")
+            )
+notion.store.RecordStore.store_recordmap = store_recordmap
+##
 
 
 def get_ical(client, calendar_url, title_format):
