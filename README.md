@@ -14,3 +14,9 @@ $> poetry run python notion_calendar/make_ics.py settings.json > calendar.ics
 $> poetry run python notion_calendar/webapp.py
 ... serving on 0.0.0.0:8080 ...
 ```
+
+## Deploy
+
+```
+$> git push dokku main:master
+```
