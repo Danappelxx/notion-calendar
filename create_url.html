@@ -12,9 +12,9 @@
 </head>
 <body>
     <label for='token'>Notion token</label>
-    <input id='token' placeholder="8f9f923fd723df...">
-    <label for='url'>URL of the Calendar View</label>
-    <input id='url' placeholder="https://notion.so/...">
+    <input id='token' placeholder="secret_8f9f923fd723df...">
+    <label for='db_id'>Database ID (last path component of calendar page)</label>
+    <input id='db_id' placeholder="asdfsfs-1234-a4f2-bsdfd-23446356tsdd">
     <label for='format'>Title format</label>
     <input id='format' value='[{Tags[0]}] {Name}'>
     <label for='result'>Resulting URL</label>
@@ -23,23 +23,23 @@
     <script>
         document.addEventListener("DOMContentLoaded", function(event) {
             let token_el = document.getElementById('token');
-            let url_el = document.getElementById('url');
+            let db_id_el = document.getElementById('db_id');
             let format_el = document.getElementById('format');
             let res_el = document.getElementById('result');
         
             function recalc_url() {
                 let token = window.btoa(token_el.value);
-                let url = window.btoa(url_el.value);
+                let db_id = window.btoa(db_id_el.value);
                 let format = window.btoa(format_el.value);
                 res = new URL('/ics', window.location.href);
                 res.searchParams.append('token', token);
-                res.searchParams.append('url', url);
+                res.searchParams.append('db_id', db_id);
                 res.searchParams.append('format', format);
                 res_el.value = res.href;
             }
 
             token_el.addEventListener("input", recalc_url);
-            url_el.addEventListener("input", recalc_url);
+            db_id_el.addEventListener("input", recalc_url);
             format_el.addEventListener("input", recalc_url);
 
             recalc_url();
